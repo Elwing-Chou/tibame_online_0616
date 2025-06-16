@@ -3,6 +3,7 @@ import model
 
 LABEL_O_SHOW = "O"
 LABEL_X_SHOW = "X"
+LABEL_UNSET_SHOW = "_"
 
 class GameFrame(tk.Frame):
     def __init__(self, root):
@@ -11,10 +12,14 @@ class GameFrame(tk.Frame):
 
     def btnpressed(self, row, col):
         self.model.pick_pos(row, col)
-        if self.model.board[row][col] == model.LABEL_X:
-            self.btns[(row, col)]["text"] = LABEL_X_SHOW
-        else:
-            self.btns[(row, col)]["text"] = LABEL_O_SHOW
+        for i in range(3):
+            for j in range(3):
+                if self.model.board[i][j] == model.LABEL_X:
+                    self.btns[(i, j)]["text"] = LABEL_X_SHOW
+                elif self.model.board[i][j] == model.LABEL_O:
+                    self.btns[(i, j)]["text"] = LABEL_O_SHOW
+                else:
+                    self.btns[(i, j)]["text"] = LABEL_UNSET_SHOW
         if self.model.game_reset is True:
             self.model.reset()
             self.reset()
